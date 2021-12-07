@@ -24,5 +24,6 @@ namespace ApplicationCore.Entities
 
         [MaxLength(2084)]
         public string? ProfilePath { get; set; }
+        public List<MovieCrew> MoviesOfCrew { get; set; }
     }
 }

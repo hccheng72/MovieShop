@@ -40,13 +40,15 @@ namespace ApplicationCore.Entities
         public DateTime? LockOutEndDate { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? LastLoggingDateTime { get; set; }
+        public DateTime? LastLoginDateTime { get; set; }
 
         public bool? IsLocked { get; set; }
         public int? AccessFailedCount { get; set; }
 
         //navigation properties
-        List<Favorite> Favorites { get; set; }
-        List<Purchase> Purchases { get; set; }
+        public List<UserRole> RolesOfUser { get; set; }
+        public List<Favorite> Favorites { get; set; }
+        public List<Purchase> Purchases { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

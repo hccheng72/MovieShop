@@ -24,10 +24,16 @@ namespace ApplicationCore.Entities
         public decimal? Price { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public string UpdatedBy { get; set; }
-        public string CreatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         //navigation property
         public List<Trailer> Trailers { get; set; }
+        public List<MovieGenre> GenresOfMovie { get; set; }
+        public List<Favorite> Favorites { get; set; }
+        public List<Purchase> Purchase { get; set; }
+        public List<MovieCrew> CrewsOfMovie { get; set; }
+        public List<MovieCast> CastsOfMovie { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

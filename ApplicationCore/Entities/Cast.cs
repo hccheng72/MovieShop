@@ -20,11 +20,12 @@ namespace ApplicationCore.Entities
         public string? Gender { get; set; }
 
         [MaxLength(2084)]
-        public string? TmbdUrl { get; set; }
+        public string? TmdbUrl { get; set; }
 
         [MaxLength(2084)]
         public string? ProfilePath { get; set; }
 
-        //navigation property??
+        //navigation properties
+        public List<MovieCast> MoviesOfCast { get; set; }
     }
 }
