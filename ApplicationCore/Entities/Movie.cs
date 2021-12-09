@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,10 @@ namespace ApplicationCore.Entities
         public DateTime? UpdatedDate { get; set; }
         public string? UpdatedBy { get; set; }
         public string? CreatedBy { get; set; }
+
+        // need rating property but not want it as a col in the table
+        [NotMapped]
+        public decimal? Rating { get; set; }
 
         //navigation property
         public List<Trailer> Trailers { get; set; }

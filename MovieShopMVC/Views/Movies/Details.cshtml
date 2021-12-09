@@ -1,0 +1,106 @@
+﻿@model ApplicationCore.Models.MovieDetailsResponseModel
+
+<header>
+	<div class="container" style="background-image:@Model.BackdropUrl">
+		<div class="row">
+			@*post*@
+			<div class="col">
+				<img src="@Model.PosterUrl"/>
+			</div>
+
+			@*movie info*@
+			<div class="col">
+				<div>
+					@Model.Title
+				</div>
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div>
+								@Model.Tagline
+							</div>
+							<div>
+								@Model.RunTime | @Model.ReleaseDate
+							</div>
+						</div>
+						<div class="col">
+							<div class="container">
+								<div class="row">
+									@foreach (var genre in Model.Genres) {
+										<div class="col">
+											@genre.Name
+										</div>
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					@Model.Rating
+				</div>
+				<div>
+					@Model.Overview
+				</div>
+			</div>
+
+			@*review and watch*@
+			<div>
+
+			</div>
+		</div>
+	</div>	
+</header>
+
+<body>
+	<div class="container">
+		<div class="row">
+			@*Left*@
+			<div class="col">
+				<div>
+					<h5>MOVIE FACTS</h5>
+					<p>Release Date <span>@Model.ReleaseDate</span></p>
+					<p>Run Time <span>@Model.RunTime</span></p>
+					<p>Box Office <span>@Model.Revenue</span></p>
+					<p>Budget <span>@Model.Budget</span></p>
+				</div>
+
+				<div>
+					<h5>TRAILERS</h5>
+					@foreach (var trailer in Model.Trailers) {
+						<p>
+							<a href="@trailer.TrailerUrl">@Model.Title: @trailer.Name</a>	
+						</p>
+					}
+				</div>
+			</div>
+
+			@*Right*@
+			<div class="col">
+				<h5>CAST</h5>
+				@foreach (var cast in Model.Casts) {
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<img src="@cast.PostUrl">
+							</div>
+							<div class="col">
+								@cast.Name
+							</div>
+							<div class="col">
+								@cast.Character
+							</div>
+						</div>
+					</div>	
+				}
+			</div>
+		</div>
+	</div>	
+</body>
+
+
+
+
+
+
+

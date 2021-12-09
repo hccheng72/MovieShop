@@ -1,26 +1,45 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.RepositoryInterfaces;
+using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace Infrastructure.Repotories
 {
     public class MovieRepository : Repository<Movie>, IMovieRepository
     {
+        public MovieRepository(MovieShopDbContext dbContex): base(dbContex)
+        {
+
+        }
         public IEnumerable<Movie> Get30HighestGrossingMovies()
         {
             // we need to go to database and get the movies using ADO.NET Dapper or EF Core
-            var movies = new List<Movie> {
-             new Movie { Id=1, Title = "Inception", Budget= 160000000, OriginalLanguage="en", PosterUrl="https://image.tmdb.org/t/p/w342//9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg"},
-             new Movie { Id=2, Title = "Interstellar", Budget= 160000000, OriginalLanguage="en", PosterUrl="https://image.tmdb.org/t/p/w342//gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"},
-             new Movie { Id=3, Title = "The Dark Knight", Budget= 160000000, OriginalLanguage="en", PosterUrl="https://image.tmdb.org/t/p/w342//qJ2tW6WMUDux911r6m7haRef0WH.jpg"},
-             new Movie { Id=4, Title = "Deadpool", Budget= 160000000, OriginalLanguage="en", PosterUrl="https://image.tmdb.org/t/p/w342//yGSxMiF0cYuAiyuve5DA6bnWEOI.jpg"},
-            new Movie { Id=5, Title = "The Avengers", Budget= 160000000, OriginalLanguage="en", PosterUrl="https://image.tmdb.org/t/p/w342//RYMX2wcKCBAr24UyPD7xwmjaTn.jpg"}
-                        };
+            // access the dbcontext object and dbset of movies object to query the movies table
+            
+            var movies = _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToList();
             return movies;
+        }
+
+        public override Movie GetById(int id)
+        {
+            //ef core include method
+            var movieDetails = _dbContext.Movies.Include(m => m.CastsOfMovie).ThenInclude(m => m.Cast)
+                .Include(m => m.GenresOfMovie).ThenInclude(m => m.Genre).Include(m => m.Trailers)
+                .FirstOrDefault(m => m.Id == id);
+
+            if (movieDetails == null) return null;
+
+            var rating = _dbContext.Reviews.Where(m => m.MovieId == id).DefaultIfEmpty()
+                .Average(r => r == null ? 0 : r.Rating);
+
+            movieDetails.Rating = rating;
+            return movieDetails;
         }
     }
 }

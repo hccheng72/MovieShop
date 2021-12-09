@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model ApplicationCore.Models.MovieCardResponseModel
+
+@*<div>
+    @Model.Id
+</div>
+<div>
+    @Model.Title
+</div>
+<div>
+    <img src="@Model.PosterUrl" />
+</div>*@
+
+<div class="card mb-4 shadow bg-light">
+    @*when click on the link, go to movie details and pass the movie id
+        localhost.movie.details/3
+        tag helper (id is same as parameter name)
+    *@
+    <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">
+        <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title" />
+    </a>
+</div>

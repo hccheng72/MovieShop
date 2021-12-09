@@ -11,5 +11,6 @@ namespace ApplicationCore.ServiceInterfaces
     {
         // Expose the methods thgat are required by the client/views
         IEnumerable<MovieCardResponseModel> GetHighestGrossingMovies();
+        MovieDetailsResponseModel GetMovieDetailsById(int id);
     }
 }

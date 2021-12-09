@@ -14,9 +14,11 @@ namespace MovieShopMVC.Controllers
         //    _logger = logger;
         //}
         private readonly IMovieService _movieService;
-        public HomeController(IMovieService movieService)
+        private readonly IGenreService _genreService;
+        public HomeController(IMovieService movieService, IGenreService genreService) //DI?
         {
             _movieService = movieService;
+            _genreService = genreService;
 
         }
 

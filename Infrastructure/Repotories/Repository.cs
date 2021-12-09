@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.RepositoryInterfaces;
+using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +10,38 @@ namespace Infrastructure.Repotories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
+        protected readonly MovieShopDbContext _dbContext;
+        public Repository(MovieShopDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public T Add(T entity)
         {
+            //_dbContext.Set<T>().Add(entity);
+            //_dbContext.SaveChanges();
             throw new NotImplementedException();
         }
 
         public T Delete(int id)
         {
+            //var d = _dbContext.Set<T>().Find(id);
+            //if (d != null)
+            //{
+            //    _dbContext.Set<T>().Remove(d);
+            //    _dbContext.SaveChanges();
+            //}
             throw new NotImplementedException();
         }
 
         public List<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Set<T>().ToList();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
-            throw new NotImplementedException();
+            var entity = _dbContext.Set<T>().Find(id);
+            return entity;
         }
 
         public T Update(T entity)
