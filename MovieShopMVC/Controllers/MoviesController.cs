@@ -12,9 +12,9 @@ namespace MovieShopMVC.Controllers
         }
         public IActionResult Details(int id)
         {
-            //call MovieService with DI to get movie details info
-            var movieDetails = _movieService.GetMovieDetailsById(id);
-            return View(movieDetails);
-        }
+			//call MovieService with DI to get movie details info
+			var movieDetails = _movieService.GetMovieDetailsById(id);
+			return View(movieDetails);
+		}
     }
 }

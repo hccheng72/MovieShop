@@ -17,9 +17,9 @@ namespace Infrastructure.Repotories
         }
         public T Add(T entity)
         {
-            //_dbContext.Set<T>().Add(entity);
-            //_dbContext.SaveChanges();
-            throw new NotImplementedException();
+			_dbContext.Set<T>().Add(entity); //save in memory
+			_dbContext.SaveChanges();// save out memory
+			return entity;
         }
 
         public T Delete(int id)
