@@ -23,15 +23,18 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 			// _movieService = new MovieMockService(new MovieRepository());
 			// Call Movie Service to get list of movie cards to show in the index view
 			// 3 ways to pass the data/models from Controller Action methods to Views
 			// * 1. Pass the Models in the View Method 
 			//   2. ViewBag
-			//   3. ViewData   
-			var movieCards = _movieService.GetHighestGrossingMovies();
+			//   3. ViewData
+            
+            // I/O bound operation
+            // CPU bound operation
+			var movieCards = await _movieService.GetHighestGrossingMovies();
 			return View(movieCards);
 		}
 

@@ -20,10 +20,10 @@ namespace Infrastructure.Services
 		{
 			_userRepository = userRepository;
 		}
-		public int RegisterUser(UserRegisterRequestModel model)
+		public async Task<int> RegisterUser(UserRegisterRequestModel model)
 		{
 			//check the email not exist in database
-			var dbUser = _userRepository.GetUserByEmail(model.Email);
+			var dbUser = await _userRepository.GetUserByEmail(model.Email);
 			if (dbUser != null)
 			{
 				//throw new Exception("Email already exists.");
@@ -45,12 +45,31 @@ namespace Infrastructure.Services
 				LastName = model.LastName
 			};
 			//return new User id
-			return _userRepository.Add(newUser).Id;
+			var createdUser = await _userRepository.Add(newUser);
+			return createdUser.Id;
 		}
 
-		public UserLoginResponseModel ValidateUser(LoginRequestModel model)
+		public async Task<UserLoginResponseModel> ValidateUser(LoginRequestModel model)
 		{
-			throw new NotImplementedException();
+			// check the hashed password is correct
+			var user = await _userRepository.GetUserByEmail(model.Email);
+			if (user != null)
+            {
+				var hashedPassword = GenerateHashedPassword(model.Password, user.Salt);
+				if (hashedPassword == user.HashedPassword)
+				{
+					var userLoginResponseModel = new UserLoginResponseModel
+					{
+						Id = user.Id,
+						Email = user.Email,
+						DateOfBirth = user.DateOfBirth,
+						FirstName = user.FirstName,
+						LastName = user.LastName
+					};
+					return userLoginResponseModel;
+				}
+			}
+			return null;
 		}
 
 		private string GenerateSalt()

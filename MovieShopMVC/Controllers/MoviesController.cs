@@ -10,10 +10,10 @@ namespace MovieShopMVC.Controllers
         {
             _movieService = movieService;
         }
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
 			//call MovieService with DI to get movie details info
-			var movieDetails = _movieService.GetMovieDetailsById(id);
+			var movieDetails = await _movieService.GetMovieDetailsById(id);
 			return View(movieDetails);
 		}
     }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repotories
 {
@@ -15,9 +16,9 @@ namespace Infrastructure.Repotories
 		{
 		}
 
-		public User GetUserByEmail(string email)
+		public async Task<User> GetUserByEmail(string email)
 		{
-			return _dbContext.Users.FirstOrDefault(x => x.Email == email);
+			return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
 		}
 	}
 }

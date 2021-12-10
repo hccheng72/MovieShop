@@ -19,10 +19,10 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(UserRegisterRequestModel registerRequestModel)
+        public async Task<IActionResult> Register(UserRegisterRequestModel registerRequestModel)
         {
             //send data to service: convert into User entity, save in User datbase
-            if (_accountService.RegisterUser(registerRequestModel) == 0)
+            if (await _accountService.RegisterUser(registerRequestModel) == 0)
 			{
                 //Email already exists
                 return View();
@@ -40,6 +40,11 @@ namespace MovieShopMVC.Controllers
         [HttpPost]
         public IActionResult Login(LoginRequestModel loginRequestModel)
         {
+            var user = _accountService.ValidateUser(loginRequestModel);
+            if (user == null)
+            {
+                //send message to enter correct email/password
+            }
             return View();
         }
     }

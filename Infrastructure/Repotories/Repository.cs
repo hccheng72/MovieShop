@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repotories
 {
@@ -15,14 +16,13 @@ namespace Infrastructure.Repotories
         {
             _dbContext = dbContext;
         }
-        public T Add(T entity)
+        public async Task<T> Add(T entity)
         {
 			_dbContext.Set<T>().Add(entity); //save in memory
-			_dbContext.SaveChanges();// save out memory
+            await _dbContext.SaveChangesAsync(); // save out memory
 			return entity;
         }
-
-        public T Delete(int id)
+        public async Task<T> Delete(int id)
         {
             //var d = _dbContext.Set<T>().Find(id);
             //if (d != null)
@@ -33,18 +33,17 @@ namespace Infrastructure.Repotories
             throw new NotImplementedException();
         }
 
-        public List<T> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            return _dbContext.Set<T>().ToList();
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public virtual T GetById(int id)
+        public virtual async Task<T> GetById(int id)
         {
-            var entity = _dbContext.Set<T>().Find(id);
-            return entity;
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public T Update(T entity)
+        public async Task<T> Update(T entity)
         {
             throw new NotImplementedException();
         }
