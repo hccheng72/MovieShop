@@ -24,13 +24,14 @@ namespace Infrastructure.Repotories
         }
         public async Task<T> Delete(int id)
         {
-            //var d = _dbContext.Set<T>().Find(id);
-            //if (d != null)
-            //{
-            //    _dbContext.Set<T>().Remove(d);
-            //    _dbContext.SaveChanges();
-            //}
-            throw new NotImplementedException();
+            var d = await _dbContext.Set<T>().FindAsync(id);
+            if (d != null)
+            {
+                _dbContext.Set<T>().Remove(d);
+                await _dbContext.SaveChangesAsync();
+                return d;
+            }
+            return null;
         }
 
         public async Task<List<T>> GetAll()
@@ -45,7 +46,12 @@ namespace Infrastructure.Repotories
 
         public async Task<T> Update(T entity)
         {
-            throw new NotImplementedException();
+            if (_dbContext.Set<T>().Update(entity) != null)
+            {
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            return null;
         }
     }
 }
