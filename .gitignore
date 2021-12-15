@@ -1,14 +1,11 @@
 .vs/
 ApplicationCore/bin/
 ApplicationCore/obj/
-ApplicationCore.csproj
 Infrastructure/bin/
 Infrastructure/obj/
 Infrastructure/Migrations/
-Infrastructure.csproj
 MovieShopMVC/bin/
 MovieShopMVC/obj/
 MovieShopMVC/wwwroot/lib/
-MovieShopMVC.csproj
 MovieShop/
 MovieShop.sln
