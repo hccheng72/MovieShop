@@ -20,5 +20,18 @@ namespace Infrastructure.Repotories
 		{
 			return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
 		}
+
+		public async Task<User> GetPurchasesById(int id)
+        {
+			var userPurchaseDetails = await _dbContext.Users.Include(u => u.Purchases).ThenInclude(u => u.Movie)
+											.FirstOrDefaultAsync(u => u.Id == id);
+			return userPurchaseDetails;
+        }
+		public async Task<User> GetFavoritesById(int id)
+		{
+			var userFavoriteDetails = await _dbContext.Users.Include(u => u.Favorites).ThenInclude(u => u.Movie)
+											.FirstOrDefaultAsync(u => u.Id == id);
+			return userFavoriteDetails;
+		}
 	}
 }

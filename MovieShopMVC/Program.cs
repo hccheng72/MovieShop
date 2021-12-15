@@ -3,6 +3,7 @@ using ApplicationCore.ServiceInterfaces;
 using Infrastructure.Data;
 using Infrastructure.Repotories;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Repositories Injection
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
@@ -26,6 +28,15 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddDbContext<MovieShopDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("MovieShopDbConnection"))
     );
+
+// tell our asp.net what kind of authentication we are using cookie based authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options => 
+    {
+        options.Cookie.Name = "MovieShopAuthCookie";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.LoginPath = "/Account/Login";
+    });
 
 var app = builder.Build();
 
@@ -42,7 +53,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

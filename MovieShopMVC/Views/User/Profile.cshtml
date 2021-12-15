@@ -1,0 +1,48 @@
+﻿@model ApplicationCore.Models.UserDetailsModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      Email
+    </div>
+    <div class="col">
+      @Model.Email
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      First Name
+    </div>
+    <div class="col">
+      @Model.FirstName
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Last Name
+    </div>
+    <div class="col">
+      @Model.LastName
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Date of Birth
+    </div>
+    <div class="col">
+      @Model.DateOfBirth
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Phone Number
+    </div>
+    <div class="col">
+      @Model.PhoneNumber
+    </div>
+  </div>
+</div>
