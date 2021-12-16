@@ -1,4 +1,6 @@
-﻿using ApplicationCore.RepositoryInterfaces;
+﻿using ApplicationCore.Entities;
+using ApplicationCore.Models;
+using ApplicationCore.RepositoryInterfaces;
 using ApplicationCore.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,20 @@ namespace Infrastructure.Services
         public GenreService(IGenreRepository genreRepository) //need DI
         {
             _genreRepository = genreRepository;
+        }
+
+        public async Task<List<GenreModel>> GetAllGenres()
+        {
+            List<Genre> genres = await _genreRepository.GetAll();
+            List<GenreModel> genreModels = new List<GenreModel>();
+            foreach (var genre in genres)
+            {
+                genreModels.Add(new GenreModel { 
+                    Id = genre.Id,
+                    Name = genre.Name
+                });
+            }
+            return genreModels.OrderBy(g => g.Name).ToList();
         }
     }
 }

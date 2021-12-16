@@ -7,19 +7,14 @@ namespace MovieShopMVC.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
-
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
         private readonly IMovieService _movieService;
         private readonly IGenreService _genreService;
-        public HomeController(IMovieService movieService, IGenreService genreService) //DI?
+        private readonly ILogger<HomeController> _logger;
+        public HomeController(IMovieService movieService, IGenreService genreService, ILogger<HomeController> logger) //DI?
         {
             _movieService = movieService;
             _genreService = genreService;
-
+            _logger = logger;
         }
 
         [HttpGet]
