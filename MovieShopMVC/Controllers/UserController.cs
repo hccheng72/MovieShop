@@ -1,4 +1,5 @@
-﻿using ApplicationCore.ServiceInterfaces;
+﻿using ApplicationCore.Models;
+using ApplicationCore.ServiceInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -20,7 +21,7 @@ namespace MovieShopMVC.Controllers
         public async Task<IActionResult> Purchases()
         {
             int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var purchasedList = await _userService.GetUserPurchasedMovies(userId);
+            IEnumerable<MovieCardResponseModel> purchasedList = await _userService.GetUserPurchasedMovies(userId);
             return View(purchasedList);
         }
 
@@ -28,7 +29,7 @@ namespace MovieShopMVC.Controllers
         public async Task<IActionResult> Favorites()
         {
             int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var favoriteList = await _userService.GetUserFavoriteMovies(userId);
+            IEnumerable<MovieCardResponseModel> favoriteList = await _userService.GetUserFavoriteMovies(userId);
             return View(favoriteList);
         }
 
@@ -36,14 +37,31 @@ namespace MovieShopMVC.Controllers
         public async Task<IActionResult> Profile()
         {
             int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var userProfile = await _userService.GetUserProfile(userId);
+            UserDetailsModel userProfile = await _userService.GetUserProfile(userId);
             return View(userProfile);
         }
 
         [HttpGet]
-        public IActionResult EditProfile()
+        public async Task<IActionResult> EditProfile()
         {
-            return View();
+            int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            UserDetailsModel userProfile = await _userService.GetUserProfile(userId);
+            return View(userProfile);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(UserDetailsModel userDetailsModel)
+        {
+            userDetailsModel.Email = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (await _userService.EditUserProfile(userDetailsModel))
+            {
+                return RedirectToAction("Profile");
+            }
+            else
+            {
+                // not edit successfully
+                return View();
+            }
         }
     }
 }

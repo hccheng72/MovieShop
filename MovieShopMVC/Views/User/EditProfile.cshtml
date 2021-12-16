@@ -1,0 +1,34 @@
+﻿@model ApplicationCore.Models.UserDetailsModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="row just-content-center">
+		<div class="col-md-4">
+		<h3>@ViewData["Title"]</h3>
+		<form id="editProfileFrom" asp-action="EditProfile">
+		  <div class="mb-3">
+			<label for="InputFirstName" class="form-label">First Name</label>
+			<input type="text" class="form-control" asp-for="FirstName" value="@Model.FirstName">
+		  </div>
+		  <div class="mb-3">
+			<label for="InputLastName" class="form-label">Last Name</label>
+			<input type="text" class="form-control" asp-for="LastName" value="@Model.LastName">
+		  </div>
+		  <div class="mb-3">
+			<label for="InputDateOfBirth" class="form-label">Date Of Birth</label>
+			<input type="date" class="form-control" asp-for="DateOfBirth" value="@Model.DateOfBirth">
+		  </div>
+		  <div class="mb-3">
+			<label for="InputPhoneNumber" class="form-label">Phone Number</label>
+			<input type="text" class="form-control" asp-for="PhoneNumber" value="@Model.PhoneNumber">
+		  </div>
+		  @*<button type="submit" class="btn btn-primary" asp-action="Profile">Cancel</button>*@
+		  <button type="submit" class="btn btn-primary" >Save</button>
+		</form>
+		</div>
+	</div>
+
+	@*how to change string to datetime and tel??*@
+	@*react to Cancel button?*@

@@ -41,8 +41,13 @@
     <div class="col">
       Phone Number
     </div>
-    <div class="col">
-      @Model.PhoneNumber
-    </div>
+    @if (Model.PhoneNumber != null) 
+    {
+        <div class="col">Model.PhoneNumber</div>
+    }
+    else 
+    {
+        <div class="col">None</div>
+    }
   </div>
 </div>

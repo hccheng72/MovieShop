@@ -19,8 +19,8 @@ namespace Infrastructure.Services
         }
         public async Task<UserDetailsModel> GetUserProfile(int id)
         {
-            var user = await _userRepository.GetById(id);
-            var userProfile = new UserDetailsModel {
+            User user = await _userRepository.GetById(id);
+            UserDetailsModel userProfile = new UserDetailsModel {
                 Email = user.Email,
                 FirstName = user.FirstName, 
                 LastName = user.LastName,
@@ -31,7 +31,14 @@ namespace Infrastructure.Services
         }
         public async Task<bool> EditUserProfile(UserDetailsModel userDetailsModel)
         {
-            var user = await _userRepository.GetUserByEmail(userDetailsModel.Email);
+            User user = await _userRepository.GetUserByEmail(userDetailsModel.Email);
+            if (user == null) return false;
+
+            user.FirstName = userDetailsModel.FirstName;
+            user.LastName = userDetailsModel.LastName;
+            user.DateOfBirth = userDetailsModel.DateOfBirth;
+            user.PhoneNumber = userDetailsModel.PhoneNumber;
+
             if (await _userRepository.Update(user) == null)
                 return false;
             return true;
