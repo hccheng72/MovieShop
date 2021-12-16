@@ -15,7 +15,7 @@ namespace MovieShopMVC.Views.Shared.Components.Genres
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<GenreModel> genres = await _genreService.GetAllGenres(); 
+            IEnumerable<GenreModel> genres = await _genreService.GetAllGenres(); 
             return View(genres);
         }
     }
